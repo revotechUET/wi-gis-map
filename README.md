@@ -1,1 +1,1 @@
-## wi-gist-map
+## wi-gis-map

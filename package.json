@@ -1,7 +1,7 @@
 {
-  "name": "@revotechuet/wi-gist-map",
+  "name": "@revotechuet/wi-gis-map",
   "version": "0.0.1",
-  "main": "./src/GistMap.jsx",
+  "main": "./src/GisMap.jsx",
   "files": [
     "src"
   ],

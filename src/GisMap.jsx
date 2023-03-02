@@ -6,7 +6,7 @@ import { memo } from "react";
 
 import "leaflet/dist/leaflet.css";
 
-function GistMap({
+function GisMap({
   prefix,
   posX,
   posY,
@@ -67,4 +67,4 @@ function GistMap({
   );
 }
 
-export default memo(GistMap);
+export default memo(GisMap);

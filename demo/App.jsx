@@ -1,9 +1,9 @@
-import GistMap from "../src/GistMap";
+import GisMap from "../src/GisMap";
 
 function App() {
   return (
     <div>
-      <GistMap prefix="gis-" />
+      <GisMap prefix="gis-" />
     </div>
   );
 }
