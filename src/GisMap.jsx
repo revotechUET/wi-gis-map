@@ -1,13 +1,13 @@
 import { parse } from 'qs';
+import { memo } from "react";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { WMSTileLayer } from "react-leaflet/WMSTileLayer";
-import { memo } from "react";
 
 import "leaflet/dist/leaflet.css";
 
-function GisMap({
-  prefix,
+const GisMap = function ({
+  propPrefix,
   posX,
   posY,
   layerUrl,
@@ -17,7 +17,7 @@ function GisMap({
   wells,
 }) {
   const getPropFromUrl = (propName, defaultVal) => {
-    propName = prefix ? `${prefix}${propName}` : propName
+    propName = propPrefix ? `${propPrefix}${propName}` : propName
     let url = new URL(window.location.href);
     const qs = parse(url.search.replace("?", ""));
     let val = qs[propName];
@@ -34,17 +34,17 @@ function GisMap({
         "http://geoserver.revotech.com.vn/geoserver/i2gws/wms"
       ),
     layers: layers || getPropFromUrl("layers", ["i2gws:i2g_wells"]),
-    wells: wells || getPropFromUrl("wells", null),
+    wells: wells || getPropFromUrl("wells", undefined),
     zoomLevel: zoomLevel || getPropFromUrl("zoomLevel", 5),
     scrollWheelZoom: scrollWheelZoom || getPropFromUrl("scrollWheelZoom", "true") === "true",
   };
-
+  const cqlFilter = mapData.wells?.length ? `key in (${mapData.wells.map(f => `'${f}'`).join(",")})` : null;
   return (
     <MapContainer
-      center={[mapData["posX"], mapData["posY"]]}
+      center={[mapData.posX, mapData.posY]}
       zoom={mapData.zoomLevel}
       scrollWheelZoom={mapData.scrollWheelZoom}
-      style={{ height: "100vh" }}
+      style={{ height: "100%", width: "100%" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -53,13 +53,12 @@ function GisMap({
         return (
           <WMSTileLayer
             key={idx}
-            url={mapData["layerUrl"]}
+            url={mapData.layerUrl}
             layers={layer}
             format="image/png"
             transparent={true}
             version="1.1.0"
-            attribution="Vietnam"
-            CQL_FILTER={mapData.wells ? `key in (${mapData.wells.map(f => `'${f}'`).join(",")})` : null}
+            cql_filter={cqlFilter}
           />
         );
       })}

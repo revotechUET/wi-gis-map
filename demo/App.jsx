@@ -2,9 +2,7 @@ import GisMap from "../src/GisMap";
 
 function App() {
   return (
-    <div>
-      <GisMap prefix="gis-" />
-    </div>
+    <GisMap propPrefix="gis-" />
   );
 }
 
